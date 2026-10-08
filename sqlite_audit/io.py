@@ -26,7 +26,7 @@ def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
 
 def load_snapshot(path: str | Path) -> dict[str, Any]:
     try:
-        value = json.loads(Path(path).read_text(encoding="utf-8"),
+        value = json.loads(Path(path).expanduser().read_text(encoding="utf-8"),
                            parse_constant=_reject_constant, object_pairs_hook=_unique_object)
     except (OSError, UnicodeError, json.JSONDecodeError) as error:
         raise AuditError(f"Cannot read snapshot: {error}") from error
@@ -119,7 +119,7 @@ def validate_snapshot(value: Any) -> None:
 
 def write_text(path: str | Path, text: str) -> None:
     """Replace the destination atomically, using a temporary sibling file."""
-    destination = Path(path)
+    destination = Path(path).expanduser()
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary: str | None = None
     try:

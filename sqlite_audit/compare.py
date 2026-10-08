@@ -16,12 +16,12 @@ def _schema_changes(before: dict[str, Any] | None, after: dict[str, Any] | None)
     if before is None or after is None:
         return [{"kind": "table_added" if before is None else "table_removed"}]
     result = []
-    for category, name_field in (("columns", "name"), ("indexes", "name")):
+    for category, name_field, label in (("columns", "name", "column"), ("indexes", "name", "index")):
         old = {item[name_field]: item for item in before["schema"][category]}
         new = {item[name_field]: item for item in after["schema"][category]}
         for name in sorted(old.keys() | new.keys()):
             if old.get(name) != new.get(name):
-                result.append({"kind": category[:-1] + "_changed", "name": name,
+                result.append({"kind": label + "_changed", "name": name,
                                "before": old.get(name), "after": new.get(name)})
     if before["schema"]["foreign_keys"] != after["schema"]["foreign_keys"]:
         result.append({"kind": "foreign_keys_changed", "before": before["schema"]["foreign_keys"],

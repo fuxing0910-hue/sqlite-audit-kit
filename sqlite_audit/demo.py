@@ -14,7 +14,7 @@ from .scan import AuditError, KeySpec, scan_database
 
 def create_demo(output_dir: str | Path) -> dict[str, Path]:
     """Create a before/after database pair and its reports; refuse overwrites."""
-    directory = Path(output_dir)
+    directory = Path(output_dir).expanduser()
     paths = {name: directory / filename for name, filename in (
         ("before_db", "before.db"), ("after_db", "after.db"),
         ("before_snapshot", "before.json"), ("after_snapshot", "after.json"),

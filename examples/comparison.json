@@ -446,7 +446,7 @@
             "unique": false
           },
           "before": null,
-          "kind": "indexe_changed",
+          "kind": "index_changed",
           "name": "readings_device_idx"
         },
         {

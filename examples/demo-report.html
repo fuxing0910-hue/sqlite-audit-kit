@@ -67,40 +67,40 @@
     &quot;name&quot;: &quot;calibration_state&quot;,
     &quot;before&quot;: null,
     &quot;after&quot;: {
-      &quot;name&quot;: &quot;calibration_state&quot;,
       &quot;declared_type&quot;: &quot;TEXT&quot;,
-      &quot;not_null&quot;: false,
-      &quot;primary_key_position&quot;: 0,
+      &quot;default_sql&quot;: &quot;&#x27;raw&#x27;&quot;,
       &quot;hidden&quot;: 0,
-      &quot;default_sql&quot;: &quot;&#x27;raw&#x27;&quot;
+      &quot;name&quot;: &quot;calibration_state&quot;,
+      &quot;not_null&quot;: false,
+      &quot;primary_key_position&quot;: 0
     }
   },
   {
-    &quot;kind&quot;: &quot;indexe_changed&quot;,
+    &quot;kind&quot;: &quot;index_changed&quot;,
     &quot;name&quot;: &quot;readings_device_idx&quot;,
     &quot;before&quot;: null,
     &quot;after&quot;: {
+      &quot;columns&quot;: [
+        {
+          &quot;collation&quot;: &quot;BINARY&quot;,
+          &quot;descending&quot;: false,
+          &quot;key&quot;: true,
+          &quot;name&quot;: &quot;device_id&quot;,
+          &quot;position&quot;: 0
+        },
+        {
+          &quot;collation&quot;: &quot;BINARY&quot;,
+          &quot;descending&quot;: false,
+          &quot;key&quot;: false,
+          &quot;name&quot;: null,
+          &quot;position&quot;: 1
+        }
+      ],
       &quot;name&quot;: &quot;readings_device_idx&quot;,
-      &quot;unique&quot;: false,
       &quot;origin&quot;: &quot;c&quot;,
       &quot;partial&quot;: false,
       &quot;sql&quot;: &quot;CREATE INDEX readings_device_idx ON readings(device_id)&quot;,
-      &quot;columns&quot;: [
-        {
-          &quot;position&quot;: 0,
-          &quot;name&quot;: &quot;device_id&quot;,
-          &quot;descending&quot;: false,
-          &quot;collation&quot;: &quot;BINARY&quot;,
-          &quot;key&quot;: true
-        },
-        {
-          &quot;position&quot;: 1,
-          &quot;name&quot;: null,
-          &quot;descending&quot;: false,
-          &quot;collation&quot;: &quot;BINARY&quot;,
-          &quot;key&quot;: false
-        }
-      ]
+      &quot;unique&quot;: false
     }
   },
   {
@@ -111,49 +111,49 @@
 ]</pre></details></section><section class="panel"><details><summary>SQLite diagnostics and audit scope</summary><pre>{
   &quot;integrity&quot;: {
     &quot;before&quot;: {
-      &quot;ok&quot;: true,
+      &quot;may_be_truncated&quot;: false,
+      &quot;message_limit&quot;: 100,
       &quot;messages&quot;: [
         &quot;ok&quot;
       ],
-      &quot;message_limit&quot;: 100,
-      &quot;may_be_truncated&quot;: false
+      &quot;ok&quot;: true
     },
     &quot;after&quot;: {
-      &quot;ok&quot;: true,
+      &quot;may_be_truncated&quot;: false,
+      &quot;message_limit&quot;: 100,
       &quot;messages&quot;: [
         &quot;ok&quot;
       ],
-      &quot;message_limit&quot;: 100,
-      &quot;may_be_truncated&quot;: false
+      &quot;ok&quot;: true
     }
   },
   &quot;foreign_keys&quot;: {
     &quot;before&quot;: {
-      &quot;checked&quot;: true,
-      &quot;violation_count&quot;: 0,
       &quot;by_table&quot;: [],
+      &quot;checked&quot;: true,
       &quot;details&quot;: [],
       &quot;details_truncated&quot;: false,
-      &quot;error&quot;: null
+      &quot;error&quot;: null,
+      &quot;violation_count&quot;: 0
     },
     &quot;after&quot;: {
-      &quot;checked&quot;: true,
-      &quot;violation_count&quot;: 1,
       &quot;by_table&quot;: [
         {
           &quot;table&quot;: &quot;readings&quot;,
           &quot;violations&quot;: 1
         }
       ],
+      &quot;checked&quot;: true,
       &quot;details&quot;: [
         {
-          &quot;table&quot;: &quot;readings&quot;,
+          &quot;constraint_id&quot;: 0,
           &quot;parent&quot;: &quot;devices&quot;,
-          &quot;constraint_id&quot;: 0
+          &quot;table&quot;: &quot;readings&quot;
         }
       ],
       &quot;details_truncated&quot;: false,
-      &quot;error&quot;: null
+      &quot;error&quot;: null,
+      &quot;violation_count&quot;: 1
     },
     &quot;delta&quot;: 1
   },

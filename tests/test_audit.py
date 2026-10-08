@@ -163,6 +163,7 @@ class AuditTests(unittest.TestCase):
         readings = next(item for item in comparison["tables"] if item["table"] == "readings")
         self.assertEqual(readings["rows"]["delta"], 1)
         self.assertTrue(readings["schema_changes"])
+        self.assertIn("index_changed", {item["kind"] for item in readings["schema_changes"]})
         with self.assertRaises(AuditError):
             create_demo(self.directory / "demo")
 
