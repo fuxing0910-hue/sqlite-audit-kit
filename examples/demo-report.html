@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<title>SQLite Audit Kit · Snapshot comparison</title><style>
+:root{--bg:#0b1420;--panel:#142131;--line:#2a3b4d;--text:#e9f1f8;--muted:#9bacc0;--accent:#35ccb0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1180px;margin:auto;padding:44px 24px 70px}header{margin-bottom:28px}.eyebrow{letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-size:12px;font-weight:700}h1{font-size:clamp(28px,4vw,44px);line-height:1.2;margin:12px 0}h2{font-size:22px;margin:0;overflow-wrap:anywhere}h3{font-size:16px;margin:25px 0 8px}p{margin:10px 0}.lede{color:var(--muted);max-width:830px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;margin-top:22px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.cards>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:19px}.cards span,.cards small{display:block;color:var(--muted)}.cards strong{display:block;font-size:30px;margin:4px 0}.cards i{font-size:20px;font-style:normal;color:var(--muted)}small{display:block;font-size:12px;color:var(--muted)}.muted{color:var(--muted)}.status,.badge{display:inline-block;border-radius:30px;background:#22364a;padding:4px 12px;font-size:12px;font-weight:700;white-space:nowrap}.status.regression{background:#572836;color:#ffbac7}.status.pass{background:#173e38;color:#8ff0d9}.status.incomplete{background:#4a3b1e;color:#f8db96}.findings{padding-left:24px}.findings li{margin:6px 0;color:#ffbac7}.notice{border-left:3px solid #e7be6f;padding:8px 16px;background:#282a29;margin:16px 0}.notice ul{margin:8px 0;padding-left:22px}.table-title{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.scroll{overflow:auto;margin-top:15px}table{width:100%;border-collapse:collapse;text-align:left;font-size:13px}th,td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top}thead th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}tbody th{font-weight:600;overflow-wrap:anywhere}td{font-variant-numeric:tabular-nums}.type{display:inline-block;margin:2px 4px 2px 0;color:var(--muted);font-size:11px}.type b{color:var(--text);font-weight:500}details{margin-top:20px}summary{cursor:pointer;color:var(--accent)}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.7 ui-monospace,Consolas,monospace;background:#0c1725;padding:16px;border-radius:8px}svg{width:100%;height:auto;display:block;margin-top:18px}svg text{fill:var(--muted);font:13px system-ui,sans-serif}footer{color:var(--muted);font-size:12px;margin-top:30px}@media(max-width:800px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:26px 14px}.panel{padding:18px}}@media print{:root{--bg:white;--panel:white;--text:#172533;--muted:#45586c;--line:#bcc8d4}main{padding:0}.panel{break-inside:avoid}}
+</style></head><body><main>
+<header><div class="eyebrow">SQLite Audit Kit / full scan</div><h1>What changed in your database?</h1><p class="lede">A reproducible comparison of schema, exact counts and selected constraints. Row changes, NULL changes and mixed SQLite storage types are observations; they do not automatically mean a regression.</p></header>
+<div class="cards">
+      <div><span>Supported tables</span><strong>3</strong><small>Union of before / after</small></div>
+      <div><span>Schema changes</span><strong>1</strong><small>Tables with structural or DDL changes</small></div>
+      <div><span>Foreign-key violations</span><strong>0 <i>→</i> 1</strong><small>Exact counts in supported tables</small></div>
+      <div><span>Regression findings</span><strong>2</strong><small>Defined checks, no health score</small></div>
+    </div><section class="panel"><div class="table-title"><h2>Regression gate</h2><span class="status regression">REGRESSION</span></div><ul class="findings"><li>Duplicate key counts increased in readings (sample_key)</li><li>Foreign-key violation count increased in readings</li></ul><p class="muted">Fails on increased FK violations per table, increased selected-key duplicate counts, or a failed after integrity check. Different key coverage or unsupported tables prevent a complete pass.</p></section>
+<section class="panel"><h2>Row counts at a glance</h2><p class="muted">Up to twelve largest tables. Missing tables use an em dash; a zero is an empty table.</p><svg viewBox="0 0 900 216" role="img" aria-labelledby="chart-title"><title id="chart-title">Table row counts before and after; first twelve tables by size</title><rect x="218" y="10" width="12" height="12" rx="3" fill="#8193a7"/><text x="237" y="20">Before</text><rect x="316" y="10" width="12" height="12" rx="3" fill="#35ccb0"/><text x="335" y="20">After</text><text x="8" y="66"><title>readings</title>readings</text><rect x="218" y="48" width="441.67" height="15" rx="3" fill="#8193a7"/><text x="666.67" y="60">5</text><rect x="218" y="68" width="530.00" height="15" rx="3" fill="#35ccb0"/><text x="755.00" y="80">6</text><text x="8" y="120"><title>devices</title>devices</text><rect x="218" y="102" width="176.67" height="15" rx="3" fill="#8193a7"/><text x="401.67" y="114">2</text><rect x="218" y="122" width="176.67" height="15" rx="3" fill="#35ccb0"/><text x="401.67" y="134">2</text><text x="8" y="174"><title>pending_records</title>pending_records</text><rect x="218" y="156" width="0.00" height="15" rx="3" fill="#8193a7"/><text x="225.00" y="168">0</text><rect x="218" y="176" width="0.00" height="15" rx="3" fill="#35ccb0"/><text x="225.00" y="188">0</text></svg></section>
+<section class="panel" id="table-0">
+          <div class="table-title"><h2>devices</h2><span class="badge">unchanged</span></div>
+          <p>Rows <b>2 → 2</b> <span class="muted">· Δ +0</span></p>
+          <div class="scroll"><table><thead><tr><th>Column</th><th>NULL count</th><th>NULL share</th><th>Actual storage types: before → after</th></tr></thead><tbody><tr><th scope="row">id</th>
+              <td>0 <span class="muted">→</span> 0<small>Δ +0</small></td>
+              <td>0.0% <span class="muted">→</span> 0.0%</td>
+              <td><span class="type">integer <b>2</b></span><small>→ <span class="type">integer <b>2</b></span></small></td></tr><tr><th scope="row">name</th>
+              <td>0 <span class="muted">→</span> 0<small>Δ +0</small></td>
+              <td>0.0% <span class="muted">→</span> 0.0%</td>
+              <td><span class="type">text <b>2</b></span><small>→ <span class="type">text <b>2</b></span></small></td></tr></tbody></table></div>
+          <p class="muted">No candidate key was selected for this table.</p></section><section class="panel" id="table-1">
+          <div class="table-title"><h2>pending_records</h2><span class="badge">unchanged</span></div>
+          <p>Rows <b>0 → 0</b> <span class="muted">· Δ +0</span></p>
+          <div class="scroll"><table><thead><tr><th>Column</th><th>NULL count</th><th>NULL share</th><th>Actual storage types: before → after</th></tr></thead><tbody><tr><th scope="row">id</th>
+              <td>0 <span class="muted">→</span> 0<small>Δ +0</small></td>
+              <td>— <span class="muted">→</span> —</td>
+              <td><span class="muted">empty</span><small>→ <span class="muted">empty</span></small></td></tr><tr><th scope="row">note</th>
+              <td>0 <span class="muted">→</span> 0<small>Δ +0</small></td>
+              <td>— <span class="muted">→</span> —</td>
+              <td><span class="muted">empty</span><small>→ <span class="muted">empty</span></small></td></tr></tbody></table></div>
+          <p class="muted">No candidate key was selected for this table.</p></section><section class="panel" id="table-2">
+          <div class="table-title"><h2>readings</h2><span class="badge">changed</span></div>
+          <p>Rows <b>5 → 6</b> <span class="muted">· Δ +1</span></p>
+          <div class="scroll"><table><thead><tr><th>Column</th><th>NULL count</th><th>NULL share</th><th>Actual storage types: before → after</th></tr></thead><tbody><tr><th scope="row">calibration_state</th>
+              <td>— <span class="muted">→</span> 0<small>Δ —</small></td>
+              <td>— <span class="muted">→</span> 0.0%</td>
+              <td>—<small>→ <span class="type">text <b>6</b></span></small></td></tr><tr><th scope="row">device_id</th>
+              <td>0 <span class="muted">→</span> 0<small>Δ +0</small></td>
+              <td>0.0% <span class="muted">→</span> 0.0%</td>
+              <td><span class="type">integer <b>5</b></span><small>→ <span class="type">integer <b>6</b></span></small></td></tr><tr><th scope="row">id</th>
+              <td>0 <span class="muted">→</span> 0<small>Δ +0</small></td>
+              <td>0.0% <span class="muted">→</span> 0.0%</td>
+              <td><span class="type">integer <b>5</b></span><small>→ <span class="type">integer <b>6</b></span></small></td></tr><tr><th scope="row">label</th>
+              <td>1 <span class="muted">→</span> 1<small>Δ +0</small></td>
+              <td>20.0% <span class="muted">→</span> 16.7%</td>
+              <td><span class="type">null <b>1</b></span> <span class="type">text <b>4</b></span><small>→ <span class="type">null <b>1</b></span> <span class="type">text <b>5</b></span></small></td></tr><tr><th scope="row">payload</th>
+              <td>4 <span class="muted">→</span> 5<small>Δ +1</small></td>
+              <td>80.0% <span class="muted">→</span> 83.3%</td>
+              <td><span class="type">blob <b>1</b></span> <span class="type">null <b>4</b></span><small>→ <span class="type">blob <b>1</b></span> <span class="type">null <b>5</b></span></small></td></tr><tr><th scope="row">sample_key</th>
+              <td>1 <span class="muted">→</span> 1<small>Δ +0</small></td>
+              <td>20.0% <span class="muted">→</span> 16.7%</td>
+              <td><span class="type">null <b>1</b></span> <span class="type">text <b>4</b></span><small>→ <span class="type">null <b>1</b></span> <span class="type">text <b>5</b></span></small></td></tr><tr><th scope="row">sensor_value</th>
+              <td>1 <span class="muted">→</span> 3<small>Δ +2</small></td>
+              <td>20.0% <span class="muted">→</span> 50.0%</td>
+              <td><span class="type">integer <b>1</b></span> <span class="type">null <b>1</b></span> <span class="type">real <b>2</b></span> <span class="type">text <b>1</b></span><small>→ <span class="type">null <b>3</b></span> <span class="type">real <b>2</b></span> <span class="type">text <b>1</b></span></small></td></tr></tbody></table></div>
+          <h3>Selected key checks</h3><div class="scroll"><table><thead><tr><th>Columns</th><th>Duplicate groups</th><th>Excess rows</th><th>Rows excluded: any NULL</th></tr></thead><tbody><tr><th scope="row">sample_key</th>
+              <td>0 → 1</td>
+              <td>0 → 1</td>
+              <td>1 → 1</td></tr></tbody></table></div><details><summary>Inspect 3 schema changes</summary><pre>[
+  {
+    &quot;kind&quot;: &quot;column_changed&quot;,
+    &quot;name&quot;: &quot;calibration_state&quot;,
+    &quot;before&quot;: null,
+    &quot;after&quot;: {
+      &quot;name&quot;: &quot;calibration_state&quot;,
+      &quot;declared_type&quot;: &quot;TEXT&quot;,
+      &quot;not_null&quot;: false,
+      &quot;primary_key_position&quot;: 0,
+      &quot;hidden&quot;: 0,
+      &quot;default_sql&quot;: &quot;&#x27;raw&#x27;&quot;
+    }
+  },
+  {
+    &quot;kind&quot;: &quot;indexe_changed&quot;,
+    &quot;name&quot;: &quot;readings_device_idx&quot;,
+    &quot;before&quot;: null,
+    &quot;after&quot;: {
+      &quot;name&quot;: &quot;readings_device_idx&quot;,
+      &quot;unique&quot;: false,
+      &quot;origin&quot;: &quot;c&quot;,
+      &quot;partial&quot;: false,
+      &quot;sql&quot;: &quot;CREATE INDEX readings_device_idx ON readings(device_id)&quot;,
+      &quot;columns&quot;: [
+        {
+          &quot;position&quot;: 0,
+          &quot;name&quot;: &quot;device_id&quot;,
+          &quot;descending&quot;: false,
+          &quot;collation&quot;: &quot;BINARY&quot;,
+          &quot;key&quot;: true
+        },
+        {
+          &quot;position&quot;: 1,
+          &quot;name&quot;: null,
+          &quot;descending&quot;: false,
+          &quot;collation&quot;: &quot;BINARY&quot;,
+          &quot;key&quot;: false
+        }
+      ]
+    }
+  },
+  {
+    &quot;kind&quot;: &quot;table_sql_changed&quot;,
+    &quot;before&quot;: &quot;CREATE TABLE readings (\n                id INTEGER PRIMARY KEY,\n                device_id INTEGER NOT NULL REFERENCES devices(id),\n                sample_key TEXT,\n                sensor_value NUMERIC,\n                label TEXT,\n                payload BLOB\n            )&quot;,
+    &quot;after&quot;: &quot;CREATE TABLE readings (\n                id INTEGER PRIMARY KEY,\n                device_id INTEGER NOT NULL REFERENCES devices(id),\n                sample_key TEXT,\n                sensor_value NUMERIC,\n                label TEXT,\n                payload BLOB\n            , calibration_state TEXT DEFAULT &#x27;raw&#x27;)&quot;
+  }
+]</pre></details></section><section class="panel"><details><summary>SQLite diagnostics and audit scope</summary><pre>{
+  &quot;integrity&quot;: {
+    &quot;before&quot;: {
+      &quot;ok&quot;: true,
+      &quot;messages&quot;: [
+        &quot;ok&quot;
+      ],
+      &quot;message_limit&quot;: 100,
+      &quot;may_be_truncated&quot;: false
+    },
+    &quot;after&quot;: {
+      &quot;ok&quot;: true,
+      &quot;messages&quot;: [
+        &quot;ok&quot;
+      ],
+      &quot;message_limit&quot;: 100,
+      &quot;may_be_truncated&quot;: false
+    }
+  },
+  &quot;foreign_keys&quot;: {
+    &quot;before&quot;: {
+      &quot;checked&quot;: true,
+      &quot;violation_count&quot;: 0,
+      &quot;by_table&quot;: [],
+      &quot;details&quot;: [],
+      &quot;details_truncated&quot;: false,
+      &quot;error&quot;: null
+    },
+    &quot;after&quot;: {
+      &quot;checked&quot;: true,
+      &quot;violation_count&quot;: 1,
+      &quot;by_table&quot;: [
+        {
+          &quot;table&quot;: &quot;readings&quot;,
+          &quot;violations&quot;: 1
+        }
+      ],
+      &quot;details&quot;: [
+        {
+          &quot;table&quot;: &quot;readings&quot;,
+          &quot;parent&quot;: &quot;devices&quot;,
+          &quot;constraint_id&quot;: 0
+        }
+      ],
+      &quot;details_truncated&quot;: false,
+      &quot;error&quot;: null
+    },
+    &quot;delta&quot;: 1
+  },
+  &quot;unsupported_tables&quot;: {
+    &quot;before&quot;: [],
+    &quot;after&quot;: []
+  }
+}</pre></details></section>
+<footer>Snapshot format v1 · Exact measurements inside read-only transactions · No record payloads are exported · Generated by SQLite Audit Kit · Offline report with no scripts, trackers or external resources.</footer>
+</main></body></html>

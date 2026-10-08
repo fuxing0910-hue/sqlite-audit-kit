@@ -1,0 +1,466 @@
+{
+  "foreign_keys": {
+    "after": {
+      "by_table": [
+        {
+          "table": "readings",
+          "violations": 1
+        }
+      ],
+      "checked": true,
+      "details": [
+        {
+          "constraint_id": 0,
+          "parent": "devices",
+          "table": "readings"
+        }
+      ],
+      "details_truncated": false,
+      "error": null,
+      "violation_count": 1
+    },
+    "before": {
+      "by_table": [],
+      "checked": true,
+      "details": [],
+      "details_truncated": false,
+      "error": null,
+      "violation_count": 0
+    },
+    "delta": 1
+  },
+  "gate": {
+    "exit_code": 1,
+    "incomplete_reasons": [],
+    "status": "regression"
+  },
+  "integrity": {
+    "after": {
+      "may_be_truncated": false,
+      "message_limit": 100,
+      "messages": [
+        "ok"
+      ],
+      "ok": true
+    },
+    "before": {
+      "may_be_truncated": false,
+      "message_limit": 100,
+      "messages": [
+        "ok"
+      ],
+      "ok": true
+    }
+  },
+  "kind": "sqlite-audit-comparison",
+  "regressions": [
+    {
+      "columns": [
+        "sample_key"
+      ],
+      "extra_rows": {
+        "after": 1,
+        "before": 0,
+        "delta": 1
+      },
+      "groups": {
+        "after": 1,
+        "before": 0,
+        "delta": 1
+      },
+      "kind": "duplicate_key",
+      "message": "Duplicate key counts increased in readings (sample_key)",
+      "table": "readings"
+    },
+    {
+      "kind": "foreign_key_violations",
+      "message": "Foreign-key violation count increased in readings",
+      "table": "readings",
+      "violations": {
+        "after": 1,
+        "before": 0,
+        "delta": 1
+      }
+    }
+  ],
+  "schema_version": 1,
+  "summary": {
+    "regression_count": 2,
+    "schema_changed_tables": [
+      "readings"
+    ],
+    "tables_added": [],
+    "tables_removed": []
+  },
+  "tables": [
+    {
+      "columns": [
+        {
+          "name": "id",
+          "null_rate_after": 0.0,
+          "null_rate_before": 0.0,
+          "nulls": {
+            "after": 0,
+            "before": 0,
+            "delta": 0
+          },
+          "types_after": {
+            "blob": 0,
+            "integer": 2,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          },
+          "types_before": {
+            "blob": 0,
+            "integer": 2,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          }
+        },
+        {
+          "name": "name",
+          "null_rate_after": 0.0,
+          "null_rate_before": 0.0,
+          "nulls": {
+            "after": 0,
+            "before": 0,
+            "delta": 0
+          },
+          "types_after": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 2
+          },
+          "types_before": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 2
+          }
+        }
+      ],
+      "keys": [],
+      "rows": {
+        "after": 2,
+        "before": 2,
+        "delta": 0
+      },
+      "schema_changes": [],
+      "status": "unchanged",
+      "table": "devices"
+    },
+    {
+      "columns": [
+        {
+          "name": "id",
+          "null_rate_after": null,
+          "null_rate_before": null,
+          "nulls": {
+            "after": 0,
+            "before": 0,
+            "delta": 0
+          },
+          "types_after": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          },
+          "types_before": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          }
+        },
+        {
+          "name": "note",
+          "null_rate_after": null,
+          "null_rate_before": null,
+          "nulls": {
+            "after": 0,
+            "before": 0,
+            "delta": 0
+          },
+          "types_after": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          },
+          "types_before": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          }
+        }
+      ],
+      "keys": [],
+      "rows": {
+        "after": 0,
+        "before": 0,
+        "delta": 0
+      },
+      "schema_changes": [],
+      "status": "unchanged",
+      "table": "pending_records"
+    },
+    {
+      "columns": [
+        {
+          "name": "calibration_state",
+          "null_rate_after": 0.0,
+          "null_rate_before": null,
+          "nulls": {
+            "after": 0,
+            "before": null,
+            "delta": null
+          },
+          "types_after": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 6
+          },
+          "types_before": null
+        },
+        {
+          "name": "device_id",
+          "null_rate_after": 0.0,
+          "null_rate_before": 0.0,
+          "nulls": {
+            "after": 0,
+            "before": 0,
+            "delta": 0
+          },
+          "types_after": {
+            "blob": 0,
+            "integer": 6,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          },
+          "types_before": {
+            "blob": 0,
+            "integer": 5,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          }
+        },
+        {
+          "name": "id",
+          "null_rate_after": 0.0,
+          "null_rate_before": 0.0,
+          "nulls": {
+            "after": 0,
+            "before": 0,
+            "delta": 0
+          },
+          "types_after": {
+            "blob": 0,
+            "integer": 6,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          },
+          "types_before": {
+            "blob": 0,
+            "integer": 5,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          }
+        },
+        {
+          "name": "label",
+          "null_rate_after": 0.16666666666666666,
+          "null_rate_before": 0.2,
+          "nulls": {
+            "after": 1,
+            "before": 1,
+            "delta": 0
+          },
+          "types_after": {
+            "blob": 0,
+            "integer": 0,
+            "null": 1,
+            "real": 0,
+            "text": 5
+          },
+          "types_before": {
+            "blob": 0,
+            "integer": 0,
+            "null": 1,
+            "real": 0,
+            "text": 4
+          }
+        },
+        {
+          "name": "payload",
+          "null_rate_after": 0.8333333333333334,
+          "null_rate_before": 0.8,
+          "nulls": {
+            "after": 5,
+            "before": 4,
+            "delta": 1
+          },
+          "types_after": {
+            "blob": 1,
+            "integer": 0,
+            "null": 5,
+            "real": 0,
+            "text": 0
+          },
+          "types_before": {
+            "blob": 1,
+            "integer": 0,
+            "null": 4,
+            "real": 0,
+            "text": 0
+          }
+        },
+        {
+          "name": "sample_key",
+          "null_rate_after": 0.16666666666666666,
+          "null_rate_before": 0.2,
+          "nulls": {
+            "after": 1,
+            "before": 1,
+            "delta": 0
+          },
+          "types_after": {
+            "blob": 0,
+            "integer": 0,
+            "null": 1,
+            "real": 0,
+            "text": 5
+          },
+          "types_before": {
+            "blob": 0,
+            "integer": 0,
+            "null": 1,
+            "real": 0,
+            "text": 4
+          }
+        },
+        {
+          "name": "sensor_value",
+          "null_rate_after": 0.5,
+          "null_rate_before": 0.2,
+          "nulls": {
+            "after": 3,
+            "before": 1,
+            "delta": 2
+          },
+          "types_after": {
+            "blob": 0,
+            "integer": 0,
+            "null": 3,
+            "real": 2,
+            "text": 1
+          },
+          "types_before": {
+            "blob": 0,
+            "integer": 1,
+            "null": 1,
+            "real": 2,
+            "text": 1
+          }
+        }
+      ],
+      "keys": [
+        {
+          "columns": [
+            "sample_key"
+          ],
+          "duplicate_groups": {
+            "after": 1,
+            "before": 0,
+            "delta": 1
+          },
+          "excluded_null_rows": {
+            "after": 1,
+            "before": 1,
+            "delta": 0
+          },
+          "extra_rows": {
+            "after": 1,
+            "before": 0,
+            "delta": 1
+          }
+        }
+      ],
+      "rows": {
+        "after": 6,
+        "before": 5,
+        "delta": 1
+      },
+      "schema_changes": [
+        {
+          "after": {
+            "declared_type": "TEXT",
+            "default_sql": "'raw'",
+            "hidden": 0,
+            "name": "calibration_state",
+            "not_null": false,
+            "primary_key_position": 0
+          },
+          "before": null,
+          "kind": "column_changed",
+          "name": "calibration_state"
+        },
+        {
+          "after": {
+            "columns": [
+              {
+                "collation": "BINARY",
+                "descending": false,
+                "key": true,
+                "name": "device_id",
+                "position": 0
+              },
+              {
+                "collation": "BINARY",
+                "descending": false,
+                "key": false,
+                "name": null,
+                "position": 1
+              }
+            ],
+            "name": "readings_device_idx",
+            "origin": "c",
+            "partial": false,
+            "sql": "CREATE INDEX readings_device_idx ON readings(device_id)",
+            "unique": false
+          },
+          "before": null,
+          "kind": "indexe_changed",
+          "name": "readings_device_idx"
+        },
+        {
+          "after": "CREATE TABLE readings (\n                id INTEGER PRIMARY KEY,\n                device_id INTEGER NOT NULL REFERENCES devices(id),\n                sample_key TEXT,\n                sensor_value NUMERIC,\n                label TEXT,\n                payload BLOB\n            , calibration_state TEXT DEFAULT 'raw')",
+          "before": "CREATE TABLE readings (\n                id INTEGER PRIMARY KEY,\n                device_id INTEGER NOT NULL REFERENCES devices(id),\n                sample_key TEXT,\n                sensor_value NUMERIC,\n                label TEXT,\n                payload BLOB\n            )",
+          "kind": "table_sql_changed"
+        }
+      ],
+      "status": "changed",
+      "table": "readings"
+    }
+  ],
+  "unsupported_tables": {
+    "after": [],
+    "before": []
+  }
+}

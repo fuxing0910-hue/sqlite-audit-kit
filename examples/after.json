@@ -1,0 +1,335 @@
+{
+  "foreign_keys": {
+    "by_table": [
+      {
+        "table": "readings",
+        "violations": 1
+      }
+    ],
+    "checked": true,
+    "details": [
+      {
+        "constraint_id": 0,
+        "parent": "devices",
+        "table": "readings"
+      }
+    ],
+    "details_truncated": false,
+    "error": null,
+    "violation_count": 1
+  },
+  "integrity": {
+    "may_be_truncated": false,
+    "message_limit": 100,
+    "messages": [
+      "ok"
+    ],
+    "ok": true
+  },
+  "kind": "sqlite-audit-snapshot",
+  "scan": {
+    "fk_detail_limit": 100,
+    "mode": "full",
+    "sampled": false,
+    "sqlite_version": "3.51.1"
+  },
+  "schema_version": 1,
+  "tables": [
+    {
+      "columns": [
+        {
+          "name": "id",
+          "nulls": 0,
+          "types": {
+            "blob": 0,
+            "integer": 2,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          }
+        },
+        {
+          "name": "name",
+          "nulls": 0,
+          "types": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 2
+          }
+        }
+      ],
+      "keys": [],
+      "name": "devices",
+      "rows": 2,
+      "schema": {
+        "columns": [
+          {
+            "declared_type": "INTEGER",
+            "default_sql": null,
+            "hidden": 0,
+            "name": "id",
+            "not_null": false,
+            "primary_key_position": 1
+          },
+          {
+            "declared_type": "TEXT",
+            "default_sql": null,
+            "hidden": 0,
+            "name": "name",
+            "not_null": true,
+            "primary_key_position": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [],
+        "sql": "CREATE TABLE devices (id INTEGER PRIMARY KEY, name TEXT NOT NULL)"
+      }
+    },
+    {
+      "columns": [
+        {
+          "name": "id",
+          "nulls": 0,
+          "types": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          }
+        },
+        {
+          "name": "note",
+          "nulls": 0,
+          "types": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          }
+        }
+      ],
+      "keys": [],
+      "name": "pending_records",
+      "rows": 0,
+      "schema": {
+        "columns": [
+          {
+            "declared_type": "INTEGER",
+            "default_sql": null,
+            "hidden": 0,
+            "name": "id",
+            "not_null": false,
+            "primary_key_position": 1
+          },
+          {
+            "declared_type": "TEXT",
+            "default_sql": null,
+            "hidden": 0,
+            "name": "note",
+            "not_null": false,
+            "primary_key_position": 0
+          }
+        ],
+        "foreign_keys": [],
+        "indexes": [],
+        "sql": "CREATE TABLE pending_records (id INTEGER PRIMARY KEY, note TEXT)"
+      }
+    },
+    {
+      "columns": [
+        {
+          "name": "id",
+          "nulls": 0,
+          "types": {
+            "blob": 0,
+            "integer": 6,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          }
+        },
+        {
+          "name": "device_id",
+          "nulls": 0,
+          "types": {
+            "blob": 0,
+            "integer": 6,
+            "null": 0,
+            "real": 0,
+            "text": 0
+          }
+        },
+        {
+          "name": "sample_key",
+          "nulls": 1,
+          "types": {
+            "blob": 0,
+            "integer": 0,
+            "null": 1,
+            "real": 0,
+            "text": 5
+          }
+        },
+        {
+          "name": "sensor_value",
+          "nulls": 3,
+          "types": {
+            "blob": 0,
+            "integer": 0,
+            "null": 3,
+            "real": 2,
+            "text": 1
+          }
+        },
+        {
+          "name": "label",
+          "nulls": 1,
+          "types": {
+            "blob": 0,
+            "integer": 0,
+            "null": 1,
+            "real": 0,
+            "text": 5
+          }
+        },
+        {
+          "name": "payload",
+          "nulls": 5,
+          "types": {
+            "blob": 1,
+            "integer": 0,
+            "null": 5,
+            "real": 0,
+            "text": 0
+          }
+        },
+        {
+          "name": "calibration_state",
+          "nulls": 0,
+          "types": {
+            "blob": 0,
+            "integer": 0,
+            "null": 0,
+            "real": 0,
+            "text": 6
+          }
+        }
+      ],
+      "keys": [
+        {
+          "columns": [
+            "sample_key"
+          ],
+          "duplicate_groups": 1,
+          "excluded_null_rows": 1,
+          "extra_rows": 1
+        }
+      ],
+      "name": "readings",
+      "rows": 6,
+      "schema": {
+        "columns": [
+          {
+            "declared_type": "INTEGER",
+            "default_sql": null,
+            "hidden": 0,
+            "name": "id",
+            "not_null": false,
+            "primary_key_position": 1
+          },
+          {
+            "declared_type": "INTEGER",
+            "default_sql": null,
+            "hidden": 0,
+            "name": "device_id",
+            "not_null": true,
+            "primary_key_position": 0
+          },
+          {
+            "declared_type": "TEXT",
+            "default_sql": null,
+            "hidden": 0,
+            "name": "sample_key",
+            "not_null": false,
+            "primary_key_position": 0
+          },
+          {
+            "declared_type": "NUMERIC",
+            "default_sql": null,
+            "hidden": 0,
+            "name": "sensor_value",
+            "not_null": false,
+            "primary_key_position": 0
+          },
+          {
+            "declared_type": "TEXT",
+            "default_sql": null,
+            "hidden": 0,
+            "name": "label",
+            "not_null": false,
+            "primary_key_position": 0
+          },
+          {
+            "declared_type": "BLOB",
+            "default_sql": null,
+            "hidden": 0,
+            "name": "payload",
+            "not_null": false,
+            "primary_key_position": 0
+          },
+          {
+            "declared_type": "TEXT",
+            "default_sql": "'raw'",
+            "hidden": 0,
+            "name": "calibration_state",
+            "not_null": false,
+            "primary_key_position": 0
+          }
+        ],
+        "foreign_keys": [
+          {
+            "from": "device_id",
+            "id": 0,
+            "match": "NONE",
+            "on_delete": "NO ACTION",
+            "on_update": "NO ACTION",
+            "parent": "devices",
+            "sequence": 0,
+            "to": "id"
+          }
+        ],
+        "indexes": [
+          {
+            "columns": [
+              {
+                "collation": "BINARY",
+                "descending": false,
+                "key": true,
+                "name": "device_id",
+                "position": 0
+              },
+              {
+                "collation": "BINARY",
+                "descending": false,
+                "key": false,
+                "name": null,
+                "position": 1
+              }
+            ],
+            "name": "readings_device_idx",
+            "origin": "c",
+            "partial": false,
+            "sql": "CREATE INDEX readings_device_idx ON readings(device_id)",
+            "unique": false
+          }
+        ],
+        "sql": "CREATE TABLE readings (\n                id INTEGER PRIMARY KEY,\n                device_id INTEGER NOT NULL REFERENCES devices(id),\n                sample_key TEXT,\n                sensor_value NUMERIC,\n                label TEXT,\n                payload BLOB\n            , calibration_state TEXT DEFAULT 'raw')"
+      }
+    }
+  ],
+  "unsupported_tables": []
+}
