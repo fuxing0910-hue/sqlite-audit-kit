@@ -2,6 +2,10 @@
 
 **See what changed in a SQLite database, without modifying it.**
 
+[![Tests](https://github.com/fuxing0910-hue/sqlite-audit-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/fuxing0910-hue/sqlite-audit-kit/actions/workflows/tests.yml)
+
+[Download the offline synthetic demo report](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases/download/v0.1.0/sqlite-audit-demo.html) · [Releases](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases)
+
 Take a snapshot before an application update, take another afterward, and compare schema, exact row counts, NULLs, actual storage types and explicitly selected candidate keys. The result is machine-readable JSON and one offline HTML report. No server, API key or runtime dependency is required.
 
 ```text
