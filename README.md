@@ -1,10 +1,12 @@
 # SQLite Audit Kit
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 **See what changed in a SQLite database, without modifying it.**
 
 [![Tests](https://github.com/fuxing0910-hue/sqlite-audit-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/fuxing0910-hue/sqlite-audit-kit/actions/workflows/tests.yml)
 
-[Download the offline synthetic demo report](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases/download/v0.1.0/sqlite-audit-demo.html) · [Releases](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases)
+[Project site](https://fuxing0910-hue.github.io/sqlite-audit-kit/) · [View the synthetic demo report](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html) · [Download the offline report](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases/download/v0.1.0/sqlite-audit-demo.html) · [Releases](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases)
 
 Take a snapshot before an application update, take another afterward, and compare schema, exact row counts, NULLs, actual storage types and explicitly selected candidate keys. The result is machine-readable JSON and one offline HTML report. No server, API key or runtime dependency is required.
 
@@ -121,17 +123,6 @@ Tests cover read-only behavior, consistent WAL snapshots, quoted/hostile identif
 
 This is an original implementation, developed with AI assistance, using Python's public SQLite interface. Improvements should preserve exact measurements, clearly stated scope and reproducible tests.
 
-## 中文快速开始
-
-这是一个只读 SQLite 审计工具：比较数据库更新前后的结构、行数、NULL、实际存储类型、外键违规以及你指定的重复键。无需第三方运行依赖。
-
-```sh
-python -m sqlite_audit demo --output-dir demo
-python -m sqlite_audit scan app.db --output before.json --key users:email
-python -m sqlite_audit scan app.db --output after.json --key users:email
-python -m sqlite_audit compare before.json after.json --html report.html --json report.json --fail-on-regression
-```
-
-演示使用明确标注的合成数据，打开 `demo/report.html` 即可查看离线报告。扫描是完整扫描，更新前后要使用相同的 `--key`。行数变化、NULL 增加、混合存储类型只展示事实，不自动判定为错误。启用回归检查时，新增的违规计数返回 1；检查范围不完整返回 2。工具只做审计，不执行迁移。
+For bug reports and pull requests, see [Contributing](CONTRIBUTING.md). Reproductions should use minimal synthetic fixtures, not real database uploads.
 
 MIT License · Copyright 2026 Fu Xing
