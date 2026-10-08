@@ -2,13 +2,11 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-**See what changed in a SQLite database, without modifying it.**
+**An update finished. Did SQLite constraint violations increase?**
 
-[![Tests](https://github.com/fuxing0910-hue/sqlite-audit-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/fuxing0910-hue/sqlite-audit-kit/actions/workflows/tests.yml)
+Capture a snapshot before an application update and another afterward. SQLite Audit Kit compares schema, exact row counts, NULLs, storage types, foreign-key violations, and the candidate keys you specify, then produces JSON and one offline HTML report.
 
-[Project site](https://fuxing0910-hue.github.io/sqlite-audit-kit/) · [View the synthetic demo report](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html) · [Download the offline report](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases/download/v0.1.0/sqlite-audit-demo.html) · [Releases](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases)
-
-Take a snapshot before an application update, take another afterward, and compare schema, exact row counts, NULLs, actual storage types and explicitly selected candidate keys. The result is machine-readable JSON and one offline HTML report. No server, API key or runtime dependency is required.
+**[Open the synthetic report →](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html)** · [Project site](https://fuxing0910-hue.github.io/sqlite-audit-kit/) · [Releases](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases)
 
 ```text
 Gate: regression | 2 regression findings
@@ -16,11 +14,19 @@ Gate: regression | 2 regression findings
   - Foreign-key violation count increased in readings
 ```
 
-The built-in demo produces this result from SQLite databases containing synthetic records. It also shows an added column/index, an empty table, a BLOB column and a NULL-count increase.
+The built-in synthetic demo reproduces this result.
 
-## Try it in a minute
+- **Read existing databases.** Read-only connections and one transaction per scan produce a consistent snapshot.
+- **Measure exact counts.** Full scans cover rows, NULLs, actual storage types, foreign keys, and explicitly selected keys.
+- **Use it in automation.** JSON, standalone HTML, and an optional regression exit code; no server, API key, or third-party runtime dependencies.
 
-Requirements: Python 3.10+ with its standard `sqlite3` module. From this repository:
+**Before sharing:** reports omit record payloads but include schema SQL, defaults, and SQLite diagnostics. Full scans can be expensive and hold read locks.
+
+![SQLite Audit Kit report: comparison summary, constraint findings, and column measurements](docs/images/demo-preview.jpg)
+
+## Try it locally
+
+Requires Python 3.10+ with the standard `sqlite3` module.
 
 ```sh
 git clone https://github.com/fuxing0910-hue/sqlite-audit-kit.git
@@ -28,101 +34,60 @@ cd sqlite-audit-kit
 python -m sqlite_audit demo --output-dir demo
 ```
 
-Open `demo/report.html` in your browser. Everything is in that file: dark-theme report, SVG comparison chart, per-column measurements and expandable schema changes. It contains no scripts, trackers, external fonts or network requests.
+Open `demo/report.html`. The databases and findings are synthetic; the report has no scripts or external assets.
 
-For an installed command:
-
-```sh
-python -m pip install .
-sqlite-audit --help
-```
-
-Installation uses setuptools to build the package; the application itself has **zero third-party dependencies**. You can use `python -m sqlite_audit` directly without installation.
-
-## Audit your database
+To compare two existing databases, generate snapshots with the same key rules:
 
 ```sh
-python -m sqlite_audit scan app.db --output before.json \
-  --key users:email --key events:device_id,event_id
-
-# Update your application / database with your own tooling, then:
-python -m sqlite_audit scan app.db --output after.json \
-  --key users:email --key events:device_id,event_id
-
-python -m sqlite_audit compare before.json after.json \
-  --html report.html --json report.json --fail-on-regression
+python -m sqlite_audit scan before.db --output before.json --key readings:sample_key
+python -m sqlite_audit scan after.db --output after.json --key readings:sample_key
+python -m sqlite_audit compare before.json after.json --html report.html --json report.json --fail-on-regression
 ```
 
-Use one line per command in PowerShell, or replace shell `\` continuations with PowerShell's backtick. The scanner does not run migrations, repair data or create a missing database. Existing output reports may be replaced; input/output aliases, including hardlinks, are rejected. The demo refuses to replace its generated files.
+Install with `python -m pip install .` to use `sqlite-audit`. The scanner reads existing files; it does not perform application migrations or repairs.
 
-You may supply `--html`, `--json`, or both to `compare`. Reports are written before a requested regression exit code is returned.
+## Let a coding agent use it
 
-## What is measured
+Ask a compatible agent:
 
-| Measurement | Meaning |
-| --- | --- |
-| Schema | Declared column types/defaults, generated-column flags, primary-key order, index metadata/DDL and foreign-key definitions |
-| Rows | Exact `COUNT(*)` for each supported user table |
-| NULLs | Exact NULL count and its share of each table's rows; an empty table has no percentage |
-| Storage types | Exact `typeof()` distribution: `null`, `integer`, `real`, `text`, `blob` |
-| Selected keys | Number of duplicate groups and excess rows for the `--key` columns |
-| Foreign keys | Exact violation counts per supported table; bounded details omit rowids and record values |
-| Integrity | SQLite `integrity_check`, with up to 100 diagnostic messages |
+> Compare these two SQLite snapshots read-only. Check whether foreign-key violations or duplicates for my specified keys increased, and write a local report.
 
-All data measurements are **full scans**, not samples. This can be expensive on large databases, especially wide tables or duplicate checks. Each scan opens the file with URI `mode=ro`, enables `PRAGMA query_only`, and reads inside one transaction so a concurrent writer cannot mix different database states within a snapshot. Reads can hold locks or delay WAL checkpoint cleanup; this is not an online monitoring service.
+There are four entry points:
 
-SQLite applies type affinity, so a declared type does not guarantee one storage type. Mixed storage types, changed row counts, additional columns and more NULLs are reported as observations, not automatically labeled unhealthy. Table DDL is compared literally, so formatting-only SQL differences can appear as schema changes.
+- **CLI:** `scan` existing databases and `compare` saved JSON snapshots.
+- **Python API:** `KeySpec`, `scan_database()`, and `compare_snapshots()` for integrations.
+- **Function tools:** declaration exports for GPT, DeepSeek, Claude and Gemini API applications, with a validated local dispatcher.
+- **Installable skill:** [sqlite-migration-audit](skills/sqlite-migration-audit/SKILL.md), task instructions for choosing the read-only audit workflow from a natural-language request.
 
-### Candidate-key semantics
+Install the skill directly from this repository:
 
-`--key` is opt-in and repeatable. A key must name existing columns on a supported table. A duplicate group contains at least two rows with identical non-NULL key components. **Excess rows** is the sum of `group size − 1`. Rows with any NULL component are excluded and counted separately, consistent with SQLite's usual UNIQUE treatment of NULLs. Comparison never guesses a key from a column name.
+```sh
+npx skills add fuxing0910-hue/sqlite-audit-kit --skill sqlite-migration-audit
+```
 
-Keep the same rules, including column order, in both snapshots. Removing or adding a rule on an existing table makes coverage incomplete. A checked key on a newly added table has a zero-table baseline. Comparisons use counts; they cannot identify whether a different set of records violates a constraint when the counts stay the same. Collation follows the database's own GROUP BY behavior.
+The Skills CLI discovers and installs instructions from the specified repository. Node.js is needed only for that optional installer; skill commands run on Python 3.10+. This direct-install command does not depend on a directory listing or ranking.
 
-The CLI's `table:column[,column]` grammar cannot express names containing its `:`/`,` separators. Other quoted identifiers are supported. For those unusual separator-containing names, use `KeySpec` through the Python API:
+See [the agent integration guide](docs/agents.md) for executable routing and installation choices. Python callers can use:
 
 ```python
 from sqlite_audit import KeySpec, scan_database, compare_snapshots
 
-before = scan_database("before.db", [KeySpec("strange:table", ("column,one",))])
-after = scan_database("after.db", [KeySpec("strange:table", ("column,one",))])
+keys = [KeySpec("readings", ("sample_key",))]
+before = scan_database("before.db", keys)
+after = scan_database("after.db", keys)
 comparison = compare_snapshots(before, after)
 ```
 
-### Regression gate and exit codes
+## Gate semantics and scope
 
-Without `--fail-on-regression`, a successfully generated comparison exits 0 even if it contains findings. With the flag:
+With `--fail-on-regression`, exit `0` means no counted regression in comparable checks, `1` means a counted regression, and `2` means incomplete coverage or invalid input. A definite regression takes precedence over incomplete coverage.
 
-| Exit | Meaning |
-| --- | --- |
-| `0` | Comparable checks found no counted regression |
-| `1` | FK violations increased in at least one table, selected-key duplicate groups/excess rows increased, or the after integrity check failed |
-| `2` | No definite regression was found, but coverage is incomplete: different key rules, an unfinished FK check, unsupported tables or a failed before integrity check |
+Checks compare constraint counts, not application semantics. Key checks are opt-in and exclude rows with NULL key components. Ordinary `main` tables are supported; virtual and shadow tables are explicitly unsupported. Unsupported or unfinished checks do not imply a healthy database.
 
-Invalid inputs, missing files, output collisions and I/O errors also exit 2. A definite regression takes precedence over incomplete coverage; both are included in the report. This is a constraint-count gate, not a guarantee that a migration preserved application semantics. Existing unchanged violations do not count as newly increased violations.
-
-## Scope and report contents
-
-- Audits ordinary tables in the database's `main` schema, including WITHOUT ROWID and generated columns supported by the local SQLite build.
-- Virtual and shadow tables are explicitly listed as unsupported. They are not silently treated as empty or healthy. SQLite 3.37+ is needed to classify these; older builds reject scans containing virtual tables.
-- Does not open attached databases, load extensions, infer indexes to create or benchmark queries. Databases requiring unavailable custom collations/extensions may not be scannable with standard Python.
-- Foreign-key definition errors are recorded as incomplete checks. Corrupt databases that prevent the scan itself from finishing return an error rather than a misleading partial snapshot.
-- Snapshots omit timestamps and source paths. JSON is versioned and deterministically ordered for repeatable scans on the same database/runtime. SQLite version and diagnostic limits remain explicit metadata.
-- No record payloads, BLOB bytes, duplicate-key values or rowids are exported. Schema names, schema SQL/default literals and SQLite diagnostics are included; review those metadata before sharing a report.
-- Every database-derived string is HTML-escaped. Reports are portable, with no JavaScript or hosted dependencies.
-
-FK details default to 100 entries. Set `--fk-detail-limit 0` for counts only, or another value up to 1000; the total is still exact. Integrity diagnostics are bounded by SQLite's 100-message limit and indicate possible truncation.
-
-## Development
+[Complete technical reference](docs/reference.md) · [Contributing](CONTRIBUTING.md) · [MIT License](LICENSE)
 
 ```sh
 python -m unittest discover -s tests -v
 ```
 
-Tests cover read-only behavior, consistent WAL snapshots, quoted/hostile identifiers, HTML escaping, storage types, empty/generated/WITHOUT ROWID tables, composite keys, NULL semantics, bounded FK details, virtual-table exclusions, malformed snapshots, hardlink aliases and CLI exit codes. CI is configured for Linux, Windows and macOS on Python 3.10, 3.12 and 3.14; configured coverage is not a claim that every matrix job has already run.
-
-This is an original implementation, developed with AI assistance, using Python's public SQLite interface. Improvements should preserve exact measurements, clearly stated scope and reproducible tests.
-
-For bug reports and pull requests, see [Contributing](CONTRIBUTING.md). Reproductions should use minimal synthetic fixtures, not real database uploads.
-
-MIT License · Copyright 2026 Fu Xing
+Original implementation, developed with AI assistance. See the reference for detailed measurements, key semantics, privacy limits, and SQLite compatibility.

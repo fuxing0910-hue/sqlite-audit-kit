@@ -1,0 +1,14 @@
+# SQLite Audit Kit
+
+> Read-only full scans of explicitly supplied SQLite databases, and before/after audit snapshot comparisons. Exact row, NULL, storage-type, foreign-key and selected candidate-key measurements. JSON and offline HTML reports; no migrations or repairs.
+
+## Documentation
+
+- [Project](https://fuxing0910-hue.github.io/sqlite-audit-kit/): English overview and synthetic comparison report.
+- [中文介绍](https://fuxing0910-hue.github.io/sqlite-audit-kit/zh.html): Chinese overview.
+- [Agent integration](https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/docs/agents.md): portable Skill, CLI and local function dispatcher; OpenAI Responses, DeepSeek Chat Completions, Claude Messages, Gemini Interactions declaration formats.
+- [Skill](https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/skills/sqlite-migration-audit/SKILL.md): installed-agent routing, explicit baselines, keys, gate semantics and coverage limits.
+- [Technical reference](https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/docs/reference.md): measurement semantics and supported SQLite features.
+- [Releases](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases): versioned wheel and portable skill assets.
+
+Schema SQL, defaults and diagnostic metadata may be sensitive. A passing comparison of counts does not prove application correctness. This documentation index does not register tools in public chat applications; installation or explicit API tool registration is required.

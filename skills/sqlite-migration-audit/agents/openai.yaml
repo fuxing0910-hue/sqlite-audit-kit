@@ -1,0 +1,7 @@
+interface:
+  display_name: "SQLite Migration Audit"
+  short_description: "Read-only SQLite migration comparisons"
+  default_prompt: "Use $sqlite-migration-audit to compare before and after SQLite snapshots and explain schema and constraint changes."
+
+policy:
+  allow_implicit_invocation: true

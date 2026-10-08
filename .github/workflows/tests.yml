@@ -21,6 +21,9 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: python -m unittest discover -s tests -v
+      - run: python scripts/sync_skill.py --check
+      - run: python -I -S skills/sqlite-migration-audit/scripts/run.py demo --output-dir skill-smoke
+      - run: python -m sqlite_audit.agent_tools --list --provider deepseek
       - run: python -m sqlite_audit demo --output-dir demo-output
       - run: python -m sqlite_audit compare demo-output/before.json demo-output/before.json --json demo-output/unchanged.json --fail-on-regression
       - run: python -m pip install --no-deps .
