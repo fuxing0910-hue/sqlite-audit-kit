@@ -8,6 +8,8 @@ Capture a snapshot before an application update and another afterward. SQLite Au
 
 **[Open the synthetic report →](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html)** · [Project site](https://fuxing0910-hue.github.io/sqlite-audit-kit/) · [Releases](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases)
 
+[How to compare SQLite databases before and after a migration](https://fuxing0910-hue.github.io/sqlite-audit-kit/sqlite-migration-audit.html) — read-only schema, row-count, NULL, foreign-key and duplicate-key checks, with a local report.
+
 ```text
 Gate: regression | 2 regression findings
   - Duplicate key counts increased in readings (sample_key)

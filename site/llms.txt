@@ -6,6 +6,7 @@
 
 - [Project](https://fuxing0910-hue.github.io/sqlite-audit-kit/): English overview and synthetic comparison report.
 - [中文介绍](https://fuxing0910-hue.github.io/sqlite-audit-kit/zh.html): Chinese overview.
+- [Compare SQLite before and after a migration](https://fuxing0910-hue.github.io/sqlite-audit-kit/sqlite-migration-audit.html): bilingual task guide for schema, row counts, NULLs, foreign keys and specified duplicate keys.
 - [Agent integration](https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/docs/agents.md): portable Skill, CLI and local function dispatcher; OpenAI Responses, DeepSeek Chat Completions, Claude Messages, Gemini Interactions declaration formats.
 - [Skill](https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/skills/sqlite-migration-audit/SKILL.md): installed-agent routing, explicit baselines, keys, gate semantics and coverage limits.
 - [Technical reference](https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/docs/reference.md): measurement semantics and supported SQLite features.

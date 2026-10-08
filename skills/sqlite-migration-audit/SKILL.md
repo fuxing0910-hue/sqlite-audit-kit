@@ -1,6 +1,6 @@
 ---
 name: sqlite-migration-audit
-description: "Read-only SQLite migration/update comparisons of schema, NULLs, foreign keys and selected duplicate keys. 只读检查 SQLite 更新前后的结构、NULL、外键和重复键；不执行迁移、修复或其他数据库审计。"
+description: "Read-only SQLite migration/update audit: compare schema, row counts, NULLs, storage types, foreign keys and selected duplicate keys in before/after snapshots. 只读对比 SQLite 更新前后的结构、行数与约束；不执行迁移或修复。"
 ---
 
 # SQLite migration audit

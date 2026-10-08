@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'none'; img-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Compare SQLite before and after a migration: read-only HTML and JSON audit | SQLite Audit Kit</title>
+  <meta name="description" content="Compare SQLite databases before and after an update without modifying them. Audit schema, row counts, NULLs, storage types, foreign keys and specified duplicate keys; export offline HTML and JSON.">
+  <link rel="canonical" href="https://fuxing0910-hue.github.io/sqlite-audit-kit/sqlite-migration-audit.html">
+  <link rel="stylesheet" href="task-guide.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="A read-only SQLite migration comparison with an offline report">
+  <meta property="og:description" content="Scan existing before/after SQLite files, compare exact audit measurements and inspect counted constraint regressions. Python standard library, no server or API key.">
+  <meta property="og:url" content="https://fuxing0910-hue.github.io/sqlite-audit-kit/sqlite-migration-audit.html">
+  <meta name="theme-color" content="#f7f8fa">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://fuxing0910-hue.github.io/sqlite-audit-kit/#software",
+        "name": "SQLite Audit Kit",
+        "url": "https://fuxing0910-hue.github.io/sqlite-audit-kit/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows, macOS, Linux",
+        "softwareRequirements": "Python 3.10 or later with the standard sqlite3 module; SQLite 3.37 or later for virtual/shadow table classification",
+        "license": "https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/LICENSE",
+        "downloadUrl": "https://github.com/fuxing0910-hue/sqlite-audit-kit/releases",
+        "description": "Read-only full scans of explicitly supplied SQLite databases and before/after audit comparisons. Schema, exact row counts, NULLs, storage types, foreign-key violations and selected candidate-key duplicates, with JSON and offline HTML reports."
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://fuxing0910-hue.github.io/sqlite-audit-kit/sqlite-migration-audit.html#faq",
+        "mainEntity": [
+          {"@type":"Question","name":"How do I check SQLite before and after a migration without modifying the database?","acceptedAnswer":{"@type":"Answer","text":"Scan the existing before and after database files into JSON audit snapshots using identical candidate-key rules. Then compare the snapshots and write an offline HTML or JSON report. The scans open existing files read-only and collect measurements within one read transaction per database."}},
+          {"@type":"Question","name":"Can this detect duplicate keys and foreign-key regressions?","acceptedAnswer":{"@type":"Answer","text":"Foreign-key violations are counted. Candidate-key duplicate checks are opt-in with --key table:column[,column] and exclude rows with any NULL key component. The regression gate detects increased foreign-key counts, increased selected-key duplicate groups or excess rows, and a failed after integrity check; counts do not identify whether the violating records changed."}},
+          {"@type":"Question","name":"Can I compare an update if I did not save a before database or snapshot?","acceptedAnswer":{"@type":"Answer","text":"You can scan the current database and inspect its current findings. A before/after comparison needs a real historical baseline. Scanning the current database twice cannot establish what an earlier update changed."}},
+          {"@type":"Question","name":"Does a passing audit prove my migration is correct?","acceptedAnswer":{"@type":"Answer","text":"No. A pass means no counted regression in comparable checks. Existing violations can remain unchanged. Row-count differences, schema changes, more NULLs and mixed storage types are observations, not automatic failures. Counts do not prove application semantics, and unsupported or unfinished checks limit coverage."}}
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="shell">
+    <header>
+      <a class="brand" href="./">SQLite Audit Kit</a>
+      <nav aria-label="Guide navigation"><a href="#quick-start">Run an audit</a><a href="#chinese" lang="zh-CN">中文指南</a><a href="https://github.com/fuxing0910-hue/sqlite-audit-kit">GitHub</a></nav>
+    </header>
+    <main id="main">
+      <section class="hero">
+        <p class="eyebrow">SQLite before / after · Read-only audit</p>
+        <h1>What changed in SQLite<br>after your application update?</h1>
+        <p class="lede">Compare two existing database files without running migration or repair SQL. SQLite Audit Kit captures schema, exact row counts, NULLs, actual storage types, foreign-key violations and the candidate keys you specify, then produces JSON and one offline HTML report.</p>
+        <div class="actions"><a class="button primary" href="demo.html">Open the synthetic report</a><a class="button" href="#quick-start">Compare your databases</a></div>
+        <p class="meta">Python 3.10+ with sqlite3 · MIT licensed · Standard library only · No server, account or API key</p>
+      </section>
+      <div class="facts">
+        <article class="fact"><h2>Keep scans read-only</h2><p>Existing files are opened with read-only SQLite connections. Each scan runs in one read transaction for a coherent snapshot.</p></article>
+        <article class="fact"><h2>Measure exact counts</h2><p>Full scans count rows, NULLs and actual storage classes. Specify intended candidate keys to measure duplicate groups and excess rows.</p></article>
+        <article class="fact"><h2>Inspect the result</h2><p>Use an offline HTML report, structured JSON or an optional regression exit code in automation. Findings include coverage limits.</p></article>
+      </div>
+      <section class="section" id="quick-start">
+        <h2>Compare existing before and after SQLite databases</h2>
+        <p>Keep a real baseline before the application update. With Python 3.10+ and standard <code>sqlite3</code>, clone the repository and scan both existing files with the same rules:</p>
+        <pre><code>git clone https://github.com/fuxing0910-hue/sqlite-audit-kit.git
+cd sqlite-audit-kit
+python -m sqlite_audit scan before.db --output before.json --key readings:sample_key
+python -m sqlite_audit scan after.db --output after.json --key readings:sample_key
+python -m sqlite_audit compare before.json after.json --html report.html --json report.json --fail-on-regression</code></pre>
+        <p>Replace the database paths and <code>readings:sample_key</code> with your actual inputs and explicitly intended key. Omit <code>--key</code> if you do not want a candidate-key check. Repeat it to check multiple keys; use comma-separated columns for a composite key.</p>
+        <p>Open <code>report.html</code> in a browser. The report is standalone, with no scripts or external assets. If you already have compatible audit snapshots, go straight to <code>compare</code>.</p>
+        <h3>Try it before using your own files</h3>
+        <pre><code>python -m sqlite_audit demo --output-dir synthetic-demo</code></pre>
+        <p>The demo writes invented before/after databases and a report into a fresh directory. It reproduces one foreign-key and one selected-key duplicate regression. Demo findings are not evidence about your database.</p>
+        <div class="callout"><p><strong>The optional gate has three outcomes.</strong> With <code>--fail-on-regression</code>, exit 0 means no counted regression in comparable checks; 1 means a counted regression; 2 means invalid input or incomplete coverage without a definite regression. Reports include findings and coverage limits. A definite regression takes precedence over incomplete coverage.</p></div>
+      </section>
+      <section class="section" id="agent-use">
+        <h2>Ask a coding agent to run the audit</h2>
+        <p>An agent with a shell can execute the CLI above. A coding agent that supports Agent Skills can install the bundled workflow into the current project with the optional Skills CLI:</p>
+        <pre><code>npx skills add fuxing0910-hue/sqlite-audit-kit --skill sqlite-migration-audit</code></pre>
+        <p class="note">Node.js is required for this installer. The skill includes its Python implementation; its commands require Python 3.10+ with standard sqlite3, without pip or a repository checkout.</p>
+        <p>A request you can give after installation:</p>
+        <div class="callout"><p>“Compare these before and after SQLite databases read-only. Check whether foreign-key violations or duplicate keys for readings.sample_key increased, and write an offline HTML and JSON report.”</p></div>
+        <p>Supply actual baseline and current paths, and specify intended keys. See the <a href="https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/skills/sqlite-migration-audit/SKILL.md">skill instructions</a> or <a href="https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/docs/agents.md">CLI, Python and function-tool integration guide</a>. The host application must expose an installed skill or registered tool for model selection.</p>
+      </section>
+      <section class="section" id="faq">
+        <h2>Common SQLite migration-audit questions</h2>
+        <article class="faq"><h3>How do I check SQLite before and after a migration without modifying the database?</h3><p>Scan the existing before and after database files into JSON audit snapshots using identical candidate-key rules. Then compare the snapshots and write an offline HTML or JSON report. The scans open existing files read-only and collect measurements within one read transaction per database.</p></article>
+        <article class="faq"><h3>Can this detect duplicate keys and foreign-key regressions?</h3><p>Foreign-key violations are counted. Candidate-key duplicate checks are opt-in with <code>--key table:column[,column]</code> and exclude rows with any NULL key component. The regression gate detects increased foreign-key counts, increased selected-key duplicate groups or excess rows, and a failed after integrity check; counts do not identify whether the violating records changed.</p></article>
+        <article class="faq"><h3>Can I compare an update if I did not save a before database or snapshot?</h3><p>You can scan the current database and inspect its current findings. A before/after comparison needs a real historical baseline. Scanning the current database twice cannot establish what an earlier update changed.</p></article>
+        <article class="faq"><h3>Does a passing audit prove my migration is correct?</h3><p>No. A pass means no counted regression in comparable checks. Existing violations can remain unchanged. Row-count differences, schema changes, more NULLs and mixed storage types are observations, not automatic failures. Counts do not prove application semantics, and unsupported or unfinished checks limit coverage.</p></article>
+        <p class="note">Ordinary <code>main</code> tables are audited. Virtual and shadow tables are explicitly unsupported; SQLite 3.37+ is required to classify them. No attached databases or custom extensions are loaded. Full scans can be expensive and can hold locks or delay WAL cleanup.</p>
+        <p class="note">Reports omit record payloads, BLOB bytes, duplicate-key values and rowids. Schema SQL, default literals, names and SQLite diagnostics remain; review them before sending a report to others or a model API. See the <a href="https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/docs/reference.md">complete measurement and privacy reference</a>.</p>
+      </section>
+      <section class="chinese" id="chinese" lang="zh-CN" aria-labelledby="chinese-title">
+        <h2 id="chinese-title">如何只读检查 SQLite 更新前后的变化？</h2>
+        <p>应用更新完成后，可以用 SQLite Audit Kit 比较真实的更新前、更新后数据库：结构、精确行数、NULL、实际存储类型、外键违规和明确指定的重复键。它生成离线 HTML 和 JSON 报告，不执行迁移或修复。</p>
+        <h3>保存两份审计快照并比较</h3>
+        <pre><code>git clone https://github.com/fuxing0910-hue/sqlite-audit-kit.git
+cd sqlite-audit-kit
+python -m sqlite_audit scan before.db --output before.json --key readings:sample_key
+python -m sqlite_audit scan after.db --output after.json --key readings:sample_key
+python -m sqlite_audit compare before.json after.json --html report.html --json report.json --fail-on-regression</code></pre>
+        <p>替换数据库路径与候选键。两次扫描须使用相同的键规则；不需要检查候选键时省略 <code>--key</code>。扫描通过只读连接、单个读事务完成，HTML 可离线直接打开。</p>
+        <h3>让支持 Skill 的编程代理使用</h3>
+        <pre><code>npx skills add fuxing0910-hue/sqlite-audit-kit --skill sqlite-migration-audit</code></pre>
+        <p>安装器需要 Node.js，运行只需要 Python 3.10+ 与标准库 sqlite3。安装后可描述：“请只读比较这两个更新前后的 SQLite 文件，检查外键违规和 readings.sample_key 重复是否增加，生成 HTML 与 JSON 报告。”</p>
+        <h3>没有历史基线怎么办？</h3>
+        <p>可以扫描当前数据库并说明当前发现，但不能把当前数据库扫描两次，冒充更新前后比较。比较需要真实的历史数据库或兼容审计快照。</p>
+        <h3>报告通过是否代表迁移正确？</h3>
+        <p>通过只表示可比较的检查中没有计数回归；原有违规可能仍然存在，计数相同也不表示违规记录相同。结构、行数、NULL、存储类型变化属于观察结果，不自动导致失败。候选键检查排除任意键列为 NULL 的行，不支持虚拟表或影子表，未完成的检查会限制覆盖范围。</p>
+        <p>全量扫描较大数据库可能耗时或持有读锁。报告虽不包含记录正文和重复键值，仍含结构 SQL、默认值和诊断元数据，分享前请检查。</p>
+        <p><a href="demo.html">打开合成数据报告</a> · <a href="https://github.com/fuxing0910-hue/sqlite-audit-kit/blob/main/README.zh-CN.md">完整中文文档</a></p>
+      </section>
+    </main>
+    <footer><span>SQLite Audit Kit · Original implementation · MIT · Developed with AI assistance</span><div><a href="./">Project home</a><a href="demo.html">Synthetic report</a><a href="https://github.com/fuxing0910-hue/sqlite-audit-kit/releases">Releases</a></div></footer>
+  </div>
+</body>
+</html>

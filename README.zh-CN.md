@@ -8,6 +8,8 @@
 
 **[直接查看合成演示报告 →](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html)** · [中文项目页](https://fuxing0910-hue.github.io/sqlite-audit-kit/zh.html) · [发布版本](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases)
 
+[SQLite 迁移前后如何只读检查行数、NULL、外键和重复键？](https://fuxing0910-hue.github.io/sqlite-audit-kit/sqlite-migration-audit.html) 包含可复现命令与 AI 工具安装入口。
+
 ```text
 Gate: regression | 2 regression findings
   - Duplicate key counts increased in readings (sample_key)

@@ -4,6 +4,8 @@ SQLite Audit Kit reads **explicitly supplied existing SQLite files** and compare
 
 SQLite Audit Kit 只读检查明确指定的现有数据库，比较更新前后的审计快照。它提供可复核的计数和约束发现，不执行迁移、修复或推断业务语义。
 
+For a complete task example and runnable install path, see [the bilingual SQLite migration audit guide](https://fuxing0910-hue.github.io/sqlite-audit-kit/sqlite-migration-audit.html).
+
 ## Choose an entry point
 
 | Environment | Entry point | What must happen first |
