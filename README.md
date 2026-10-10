@@ -2,11 +2,11 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-**An update finished. Did SQLite constraint violations increase?**
+**Check what changed in SQLite before you ship a migration.**
 
 Capture a snapshot before an application update and another afterward. SQLite Audit Kit compares schema, exact row counts, NULLs, storage types, foreign-key violations, and the candidate keys you specify, then produces JSON and one offline HTML report.
 
-**[Open the synthetic report →](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html)** · [Project site](https://fuxing0910-hue.github.io/sqlite-audit-kit/) · [Releases](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases)
+**[Open the synthetic report →](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html)** · [Project site](https://fuxing0910-hue.github.io/sqlite-audit-kit/) · [Releases](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases) · [If useful, star on GitHub ☆](https://github.com/fuxing0910-hue/sqlite-audit-kit)
 
 [How to compare SQLite databases before and after a migration](https://fuxing0910-hue.github.io/sqlite-audit-kit/sqlite-migration-audit.html) — read-only schema, row-count, NULL, foreign-key and duplicate-key checks, with a local report.
 
@@ -16,7 +16,7 @@ Gate: regression | 2 regression findings
   - Foreign-key violation count increased in readings
 ```
 
-The built-in synthetic demo reproduces this result.
+For app updates, migration reviews, and CI checks. The synthetic demo reproduces both findings; open the report without installing anything.
 
 - **Read existing databases.** Read-only connections and one transaction per scan produce a consistent snapshot.
 - **Measure exact counts.** Full scans cover rows, NULLs, actual storage types, foreign keys, and explicitly selected keys.
@@ -24,7 +24,7 @@ The built-in synthetic demo reproduces this result.
 
 **Before sharing:** reports omit record payloads but include schema SQL, defaults, and SQLite diagnostics. Full scans can be expensive and hold read locks.
 
-![SQLite Audit Kit report: comparison summary, constraint findings, and column measurements](docs/images/demo-preview.jpg)
+[![SQLite Audit Kit report: comparison summary, constraint findings, and column measurements](docs/images/demo-preview.jpg)](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html)
 
 ## Try it locally
 

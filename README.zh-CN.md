@@ -2,11 +2,11 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-**应用更新完成了，SQLite 的约束违规有没有增加？**
+**发布迁移前，检查 SQLite 到底发生了什么变化。**
 
 更新前后各生成一份快照。SQLite Audit Kit 对比数据库结构、精确行数、NULL、实际存储类型、外键违规及你指定的候选键，生成 JSON 和一个可离线打开的 HTML 报告。
 
-**[直接查看合成演示报告 →](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html)** · [中文项目页](https://fuxing0910-hue.github.io/sqlite-audit-kit/zh.html) · [发布版本](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases)
+**[直接查看合成演示报告 →](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html)** · [中文项目页](https://fuxing0910-hue.github.io/sqlite-audit-kit/zh.html) · [发布版本](https://github.com/fuxing0910-hue/sqlite-audit-kit/releases) · [有用的话点个 Star ☆](https://github.com/fuxing0910-hue/sqlite-audit-kit)
 
 [SQLite 迁移前后如何只读检查行数、NULL、外键和重复键？](https://fuxing0910-hue.github.io/sqlite-audit-kit/sqlite-migration-audit.html) 包含可复现命令与 AI 工具安装入口。
 
@@ -16,7 +16,7 @@ Gate: regression | 2 regression findings
   - Foreign-key violation count increased in readings
 ```
 
-内置合成演示可复现这份结果：指定键的重复计数和外键违规计数都增加了。
+适合应用更新、迁移检查与 CI。无需安装即可打开合成报告，看到两项实际变化：指定键的重复计数和外键违规计数都增加了。
 
 - **只读检查现有数据库。** 只读连接与单次扫描事务，避免一份快照混入不同时间的状态。
 - **查看精确统计。** 完整扫描行数、NULL、存储类型、外键与明确指定的候选键。
@@ -24,7 +24,7 @@ Gate: regression | 2 regression findings
 
 **分享前请检查：** 报告省略记录正文，但仍含结构 SQL、默认值和 SQLite 诊断信息。完整扫描可能较慢，也可能持有读取锁。
 
-![SQLite Audit Kit 报告：对比摘要、约束检查结果和逐列统计](docs/images/demo-preview.jpg)
+[![SQLite Audit Kit 报告：对比摘要、约束检查结果和逐列统计](docs/images/demo-preview.jpg)](https://fuxing0910-hue.github.io/sqlite-audit-kit/demo.html)
 
 ## 在本地体验
 

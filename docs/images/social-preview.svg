@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc"><title id="title">SQLite Audit Kit — check what changed after a SQLite update</title><desc id="desc">Read-only before/after snapshots compare schema and counts, detect increased duplicate-key and foreign-key violations, and produce offline HTML or JSON. The illustrated report is synthetic.</desc>
+<rect x="0" y="0" width="1280" height="640" rx="0" fill="#f5f8f7"/>
+<rect x="64" y="58" width="44" height="44" rx="12" fill="#ddf3e8" stroke="#b5d7c5" stroke-width="1"/>
+<text x="72" y="88" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#185a43">DB</text>
+<text x="123" y="91" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#20352f">SQLite Audit Kit</text>
+<text x="994" y="87" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#60746a">FU XING / OPEN SOURCE</text>
+<line x1="64" y1="576" x2="1216" y2="576" stroke="#d7e4de" stroke-width="1"/>
+<text x="64" y="610" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="400" fill="#185a43">github.com/fuxing0910-hue/sqlite-audit-kit</text>
+<text x="1062" y="610" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#60746a">PYTHON 3.10+</text>
+<text x="64" y="198" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700" fill="#20352f">Check what changed</text>
+<text x="64" y="257" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700" fill="#20352f">after a SQLite</text>
+<text x="64" y="316" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700" fill="#185a43">update.</text>
+<text x="66" y="359" font-family="Segoe UI, Arial, sans-serif" font-size="23" font-weight="400" fill="#60746a">Compare local snapshots before you ship.</text>
+<rect x="64" y="405" width="123" height="36" rx="8" fill="#e5f2eb"/>
+<text x="78" y="429" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#185a43">READ-ONLY</text>
+<rect x="197" y="405" width="188" height="36" rx="8" fill="#e5f2eb"/>
+<text x="211" y="429" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#185a43">SCHEMA + COUNTS</text>
+<rect x="64" y="451" width="317" height="36" rx="8" fill="#e5f2eb"/>
+<text x="78" y="475" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#185a43">DUPLICATE + FOREIGN-KEY CHECKS</text>
+<rect x="64" y="497" width="208" height="36" rx="8" fill="#e5f2eb"/>
+<text x="78" y="521" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#185a43">OFFLINE HTML / JSON</text>
+<rect x="677" y="163" width="539" height="357" rx="18" fill="#163d30"/>
+<text x="703" y="198" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#a7cbbc">SYNTHETIC REPORT / BEFORE → AFTER</text>
+<text x="703" y="242" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">Regression detected</text>
+<rect x="703" y="264" width="487" height="93" rx="11" fill="#245443"/>
+<text x="724" y="300" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" fill="#d6f2e5">0 → 1</text>
+<text x="724" y="330" font-family="Segoe UI, Arial, sans-serif" font-size="19" font-weight="400" fill="#bedbce">Foreign-key violation count</text>
+<text x="1124" y="326" font-family="Segoe UI, Arial, sans-serif" font-size="27" font-weight="700" fill="#8fc7ab">FK</text>
+<rect x="703" y="375" width="487" height="67" rx="10" fill="#fff2e9"/>
+<text x="720" y="401" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#93451f">2 REGRESSION FINDINGS</text>
+<text x="720" y="427" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="400" fill="#733e26">Duplicate counts + FK violations increased</text>
+<text x="703" y="482" font-family="Consolas, monospace" font-size="21" font-weight="400" fill="#c2e3d3">readings</text>
+<text x="956" y="482" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff">HTML + JSON report</text>
+</svg>
